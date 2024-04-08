@@ -145,12 +145,6 @@ List::~List() {
 	head = nullptr;
 }
 
-/*
-  -----------------
-	Лабораторная 2
-  -----------------
-*/
-
 /* A подмножество B */
 bool List::isSubset(List& b) {
 	if (isEmpty())
