@@ -6,6 +6,8 @@
 
 using namespace std;
 
+Node* Copy(Node* list);
+
 /* Инициализация пустого множества */
 Node* InitEmptySet() {
 	return nullptr;
@@ -43,75 +45,14 @@ Node* AddElement(Node* firstNode, int value) {
 }
 
 /* Создание множества с заданным размером и границей значений */
-Node* CreateNewSet(int size, int minVal, int maxVal) {
+Node* CreateNewSet(int size, int massive[]) {
 	/* Проверка размера */
-	if (size <= 0)
+	if (size < 0)
 		throw exception("Некорректный размер");
 
-	/* Проверка границ значений */
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид случайной генерации
-	int i = 0;
 	Node* first = nullptr;
-	Node* prev = nullptr;
-	while (i < size) {
-		first = AddElement(first, rand() % (maxVal - minVal + 1) + minVal);
-		if (first != prev) {
-			i++;
-			prev = first;
-		}
-	}
-
-	return first;
-}
-
-/* Создание множества с заданным размером, границей значений и типом множества*/
-Node* CreateNewSet(int size, int minVal, int maxVal, char type) {
-	/* Проверка размера */
-	if (size <= 0)
-		throw exception("Некорректный размер");
-
-	/* Проверка границ значений */
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид случайной генерации
-	int i = 0;
-	Node* first = nullptr;
-	Node* prev = nullptr;
-
-	switch (type) {
-	case 'A': {
-		while (i < size) {
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 > 3) {
-				first = AddElement(first, generated);
-				if (first != prev) {
-					i++;
-					prev = first;
-				}
-			}
-		}
-		break;
-	}
-	case 'B': {
-		while (i < size) {
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 < 8) {
-				first = AddElement(first, generated);
-				if (first != prev) {
-					i++;
-					prev = first;
-				}
-			}
-		}
-		break;
-	}
-	default:
-		throw exception("Неверный тип массива");
-	}
+	for (int i{}; i < size; i++)
+		first = AddElement(first, massive[i]);
 
 	return first;
 }
@@ -186,6 +127,11 @@ bool IsEqu(Node* a, Node* b) {
 
 /* Объединение множеств A и B */
 Node* Unite(Node* a, Node* b) {
+	if (IsEmpty(a))
+		return Copy(b);
+	if (IsEmpty(b))
+		return Copy(a);
+
 	Node* c = InitEmptySet();
 
 	if (!IsEmpty(a)) {
@@ -226,7 +172,7 @@ Node* Substraction(Node* a, Node* b) {
 	if (IsEmpty(a))
 		return nullptr;
 	if (IsEmpty(b))
-		return a;
+		return Copy(a);
 
 	Node* c = InitEmptySet();
 
@@ -247,6 +193,19 @@ Node* SimmetricalSub(Node* a, Node* b) {
 
 	ClearSet(unite);
 	ClearSet(common);
+
+	return c;
+}
+
+Node* Copy(Node* list) {
+	Node* c = InitEmptySet();
+
+	if (!IsEmpty(list)) {
+		do {
+			c = AddElement(c, list->value);
+			list = list->next;
+		} while (list);
+	}
 
 	return c;
 }

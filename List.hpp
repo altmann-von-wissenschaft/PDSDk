@@ -15,8 +15,7 @@ public:
 	bool isEmpty();//F2
 	bool has(int value);//F3
 	bool add(int value);//F4
-	void fillRandom(int size, int minVal, int maxVal);//F5
-	void fillRandom(int size, int minVal, int maxVal, char type);//F5*
+	void fillRandom(int size, int massive[]);//F5
 	int length();//F6
 	string print(char delimeter);//F7
 	~List();//F8

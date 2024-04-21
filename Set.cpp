@@ -22,50 +22,12 @@ bool Set::add(int value) {
 	return container.insert(value).second;
 }
 
-void Set::fillRandom(int size, int minVal, int maxVal) {
-	if (size <= 0)
+void Set::fillRandom(int size, int massive[]) {
+	if (size < 0)
 		throw exception("Некорректный размер");
 
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид
-	int i = 0;
-	while (i < size)
-		if (add(rand() % (maxVal - minVal + 1) + minVal))
-			i++;
-}
-
-void Set::fillRandom(int size, int minVal, int maxVal, char type) {
-	if (size <= 0)
-		throw exception("Некорректный размер");
-
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	int i = 0;
-	switch (type) {
-	case 'A':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 > 3)
-				if (add(generated))
-					i++;
-		}
-		break;
-	case 'B':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 < 8)
-				if (add(generated))
-					i++;
-		}
-		break;
-	default:
-		throw exception("Неверный тип массива");
-	}
+	for (int i{}; i < size; i++)
+		add(massive[i]);
 }
 
 int Set::length() {
@@ -106,6 +68,11 @@ bool Set::isEqual(Set& b) {
 }
 
 Set* Set::unite(Set& a, Set& b) {
+	if (a.isEmpty())
+		return new Set(b);
+	if (b.isEmpty())
+		return new Set(a);
+
 	Set* c = new Set();
 
 	if (!a.isEmpty()) {
@@ -125,7 +92,7 @@ Set* Set::unite(Set& a, Set& b) {
 
 Set* Set::cross(Set& a, Set& b) {
 	if (a.isEmpty() || b.isEmpty())
-		return nullptr;
+		return new Set();
 
 	Set* c = new Set();
 
@@ -141,7 +108,7 @@ Set* Set::cross(Set& a, Set& b) {
 
 Set* Set::substraction(Set& a, Set& b) {
 	if (a.isEmpty())
-		return nullptr;
+		return new Set();
 	if (b.isEmpty())
 		return new Set(a);
 

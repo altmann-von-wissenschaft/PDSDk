@@ -45,58 +45,13 @@ bool List::add(int value) {
 }
 
 /* Создание множества с заданным размером и границей значений */
-void List::fillRandom(int size, int minVal, int maxVal) {
+void List::fillRandom(int size, int massive[]) {
 	/* Проверка размера */
-	if (size <= 0)
+	if (size < 0)
 		throw exception("Некорректный размер");
 
-	/* Проверка границ значений */
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид случайной генерации
-	int i = 0;
-	while (i < size) {
-		if (add(rand() % (maxVal - minVal + 1) + minVal));
-		i++;
-	}
-}
-
-/* Создание множества с заданным размером, границей значений и типом множества*/
-void List::fillRandom(int size, int minVal, int maxVal, char type) {
-	/* Проверка размера */
-	if (size <= 0)
-		throw exception("Некорректный размер");
-
-	/* Проверка границ значений */
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид случайной генерации
-	int i = 0;
-
-	switch (type) {
-	case 'A':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 > 3)
-				if (add(generated))
-					i++;
-		}
-		break;
-	case 'B':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 < 8)
-				if (add(generated))
-					i++;
-		}
-		break;
-	default:
-		throw exception("Неверный тип массива");
-	}
+	for (int i{}; i < size; i++)
+		add(massive[i]);
 }
 
 /* Множество в строку */
@@ -170,6 +125,11 @@ bool List::isEqual(List& b) {
 
 /* Объединение множеств A и B */
 List* List::unite(List& a, List& b) {
+	if (a.isEmpty())
+		return new List(b);
+	if (b.isEmpty())
+		return new List(a);
+
 	List* c = new List();
 
 	Node* tmp = a.getHead();
@@ -194,7 +154,7 @@ List* List::unite(List& a, List& b) {
 /* Пересечение множеств */
 List* List::cross(List& a, List& b) {
 	if (a.isEmpty() || b.isEmpty())
-		return nullptr;
+		return new List();
 
 	List* c = new List();
 
@@ -211,7 +171,7 @@ List* List::cross(List& a, List& b) {
 /* Разность множеств */
 List* List::substraction(List& a, List& b) {
 	if (a.isEmpty())
-		return nullptr;
+		return new List();
 	if (b.isEmpty())
 		return new List(a);
 
@@ -248,6 +208,3 @@ List::List(List& const set) {
 		} while (a);
 	}
 }
-
-
-

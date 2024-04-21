@@ -24,50 +24,12 @@ bool SetMap::add(int value) {
 	return size != length();
 }
 
-void SetMap::fillRandom(int size, int minVal, int maxVal) {
-	if (size <= 0)
+void SetMap::fillRandom(int size, int massive[]) {
+	if (size < 0)
 		throw exception("Некорректный размер");
 
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид
-	int i = 0;
-	while (i < size)
-		if (add(rand() % (maxVal - minVal + 1) + minVal))
-			i++;
-}
-
-void SetMap::fillRandom(int size, int minVal, int maxVal, char type) {
-	if (size <= 0)
-		throw exception("Некорректный размер");
-
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	int i = 0;
-	switch (type) {
-	case 'A':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 > 3)
-				if (add(generated))
-					i++;
-		}
-		break;
-	case 'B':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 < 8)
-				if (add(generated))
-					i++;
-		}
-		break;
-	default:
-		throw exception("Неверный тип массива");
-	}
+	for (int i{}; i < size; i++)
+		add(massive[i]);
 }
 
 int SetMap::length() {
@@ -108,6 +70,11 @@ bool SetMap::isEqual(SetMap& b) {
 }
 
 SetMap* SetMap::unite(SetMap& a, SetMap& b) {
+	if (a.isEmpty())
+		return new SetMap(b);
+	if (b.isEmpty())
+		return new SetMap(a);
+
 	SetMap* c = new SetMap();
 
 	if (!a.isEmpty()) {
@@ -127,7 +94,7 @@ SetMap* SetMap::unite(SetMap& a, SetMap& b) {
 
 SetMap* SetMap::cross(SetMap& a, SetMap& b) {
 	if (a.isEmpty() || b.isEmpty())
-		return nullptr;
+		return new SetMap();
 
 	SetMap* c = new SetMap();
 
@@ -143,7 +110,7 @@ SetMap* SetMap::cross(SetMap& a, SetMap& b) {
 
 SetMap* SetMap::substraction(SetMap& a, SetMap& b) {
 	if (a.isEmpty())
-		return nullptr;
+		return new SetMap();
 	if (b.isEmpty())
 		return new SetMap(a);
 

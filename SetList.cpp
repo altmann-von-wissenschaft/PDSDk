@@ -1,5 +1,6 @@
 #include "SetList.hpp"
 
+#include <algorithm>
 #include <exception>
 #include <cstdlib>
 #include <ctime>
@@ -18,12 +19,7 @@ bool SetList::has(int value) {
 	if (isEmpty())
 		return false;
 
-	list<int>::iterator iter;
-	for (iter = container.begin(); iter != container.end(); ++iter)
-		if (*iter == value)
-			return true;
-
-	return false;
+	return find(container.begin(), container.end(), value) != container.end();
 }
 
 bool SetList::add(int value) {
@@ -34,50 +30,12 @@ bool SetList::add(int value) {
 	else return false;
 }
 
-void SetList::fillRandom(int size, int minVal, int maxVal) {
-	if (size <= 0)
+void SetList::fillRandom(int size, int massive[]) {
+	if (size < 0)
 		throw exception("Некорректный размер");
 
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	srand(time(nullptr)); // Сид
-	int i = 0;
-	while (i < size)
-		if (add(rand() % (maxVal - minVal + 1) + minVal))
-			i++;
-}
-
-void SetList::fillRandom(int size, int minVal, int maxVal, char type) {
-	if (size <= 0)
-		throw exception("Некорректный размер");
-
-	if (maxVal < minVal)
-		throw exception("Некорректные границы");
-
-	int i = 0;
-	switch (type) {
-	case 'A':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 > 3)
-				if (add(generated))
-					i++;
-		}
-		break;
-	case 'B':
-		while (i < size)
-		{
-			int generated = rand() % (maxVal - minVal + 1) + minVal;
-			if (generated % 10 < 8)
-				if (add(generated))
-					i++;
-		}
-		break;
-	default:
-		throw exception("Неверный тип массива");
-	}
+	for (int i{}; i < size; i++)
+		add(massive[i]);
 }
 
 int SetList::length() {
@@ -118,6 +76,11 @@ bool SetList::isEqual(SetList& b) {
 }
 
 SetList* SetList::unite(SetList& a, SetList& b) {
+	if (a.isEmpty())
+		return new SetList(b);
+	if (b.isEmpty())
+		return new SetList(a);
+
 	SetList* c = new SetList();
 
 	if (!a.isEmpty()) {
@@ -137,7 +100,7 @@ SetList* SetList::unite(SetList& a, SetList& b) {
 
 SetList* SetList::cross(SetList& a, SetList& b) {
 	if (a.isEmpty() || b.isEmpty())
-		return nullptr;
+		return new SetList();
 
 	SetList* c = new SetList();
 
@@ -153,7 +116,7 @@ SetList* SetList::cross(SetList& a, SetList& b) {
 
 SetList* SetList::substraction(SetList& a, SetList& b) {
 	if (a.isEmpty())
-		return nullptr;
+		return new SetList();
 	if (b.isEmpty())
 		return new SetList(a);
 

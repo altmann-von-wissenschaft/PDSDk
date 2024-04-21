@@ -13,8 +13,7 @@ Node* InitEmptySet();//F1
 bool  IsEmpty(Node* firstNode);//F2
 bool  HasElement(Node* firstNode, int value);//F3
 Node* AddElement(Node* firstNode, int value);//F4
-Node* CreateNewSet(int size, int minVal, int maxVal);//F5
-Node* CreateNewSet(int size, int minVal, int maxVal, char type);//F5*
+Node* CreateNewSet(int size, int massive[]);//F5
 int   Length(Node* firstNode);//F6
 string PrintSet(Node* firstNode, char delimeter);//F7
 Node* ClearSet(Node* firstNode);//F8
