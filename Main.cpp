@@ -13,11 +13,11 @@
 #include "SetMultiset.hpp"
 #include "SetMap.hpp"
 
-#define ROWS          13
+#define ROWS          14
 #define COLUMNS       7
 #define ADDICTIVE_LEN 2
 #define DEFAULT_SIZE  0
-#define RATIO         1
+#define RATIO         2
 #define MIN           0
 
 using namespace std;
@@ -48,6 +48,7 @@ int main() {
 		{"Объединение", "0", "0", "0", "0", "0", "0"},
 		{"Пересечение", "0", "0", "0", "0", "0", "0"},
 		{"Разность A-B", "0", "0", "0", "0", "0", "0"},
+		{"Разность A-А", "0", "0", "0", "0", "0", "0"},
 		{"Симметричная разность", "0", "0", "0", "0", "0", "0"},
 	};
 	
@@ -63,7 +64,7 @@ int main() {
 		/* Генерация случайного массива */
 		int* A = generateRandom(MIN, RATIO * size_a, size_a);
 		int* B = generateRandom(MIN, RATIO * size_b, size_b);
-
+		
 		/* Расчеты */
 		thread thread1([&](){
 			int i = 1, j = 1;
@@ -81,11 +82,11 @@ int main() {
 
 			t = timer::now();
 			Length(a);
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			Length(b);
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			IsSub(a, a);
@@ -138,11 +139,11 @@ int main() {
 
 			t = timer::now();
 			a.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			b.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			a.isSubset(a);
@@ -179,6 +180,7 @@ int main() {
 
 		SetList a;
 		SetList b;
+		
 		thread thread31([&]() {
 			int i = 1, j = 3;
 			// List
@@ -200,11 +202,11 @@ int main() {
 			int i = 3, j = 3;
 			auto t = timer::now();
 			a.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			b.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			a.isSubset(a);
@@ -254,11 +256,11 @@ int main() {
 
 			t = timer::now();
 			a.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			b.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			a.isSubset(a);
@@ -307,11 +309,11 @@ int main() {
 
 			t = timer::now();
 			a.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			b.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			a.isSubset(a);
@@ -360,11 +362,11 @@ int main() {
 
 			t = timer::now();
 			a.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			b.length();
-			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			data[i++][j] = to_string((duration_cast<microseconds>(timer::now() - t)).count());
 
 			t = timer::now();
 			a.isSubset(a);
