@@ -120,6 +120,11 @@ int main() {
 			ClearSet(c);
 
 			t = timer::now();
+			c = Substraction(a, a);
+			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+			ClearSet(c);
+
+			t = timer::now();
 			c = SimmetricalSub(a, b);
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 			ClearSet(c);
@@ -171,6 +176,10 @@ int main() {
 
 			t = timer::now();
 			List::substraction(a, b);
+			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+
+			t = timer::now();
+			List::substraction(a, a);
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 
 			t = timer::now();
@@ -237,6 +246,10 @@ int main() {
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 
 			t = timer::now();
+			SetList::substraction(a, a);
+			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+
+			t = timer::now();
 			SetList::simmetricalSub(a, b);
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 			});
@@ -288,6 +301,10 @@ int main() {
 
 			t = timer::now();
 			Set::substraction(a, b);
+			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+
+			t = timer::now();
+			Set::substraction(a, a);
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 
 			t = timer::now();
@@ -344,6 +361,10 @@ int main() {
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 
 			t = timer::now();
+			SetMultiset::substraction(a, a);
+			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+
+			t = timer::now();
 			SetMultiset::simmetricalSub(a, b);
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 			});
@@ -394,6 +415,10 @@ int main() {
 
 			t = timer::now();
 			SetMap::substraction(a, b);
+			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
+
+			t = timer::now();
+			SetMap::substraction(a, a);
 			data[i++][j] = to_string((duration_cast<milliseconds>(timer::now() - t)).count());
 
 			t = timer::now();
